@@ -32,9 +32,23 @@ module.exports = {
   // These are the "entry points" to our application.
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
-  entry: [
+  entry: {
     // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
+    home: [
+      require.resolve('./polyfills'),
+      require.resolve('react-dev-utils/webpackHotDevClient'),
+      path.resolve(paths.appSrc, "index.js")
+    ],
+    login: [
+      require.resolve('./polyfills'),
+      require.resolve('react-dev-utils/webpackHotDevClient'),
+      path.resolve(paths.appSrc, "login/index.js")
+    ],
+    register: [
+      require.resolve('./polyfills'),
+      require.resolve('react-dev-utils/webpackHotDevClient'),
+      path.resolve(paths.appSrc, "register/index.js")
+    ],
     // Include an alternative client for WebpackDevServer. A client's job is to
     // connect to WebpackDevServer by a socket and get notified about changes.
     // When you save a file, the client will either apply hot updates (in case
@@ -45,22 +59,20 @@ module.exports = {
     // the line below with these two lines if you prefer the stock client:
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
     // Finally, this is your app's code:
-    paths.appIndexJs,
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
-  ],
+  },
   output: {
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
     // This does not produce a real file. It's just the virtual path that is
     // served by WebpackDevServer in development. This is the JS bundle
     // containing code from all our entry points, and the Webpack runtime.
-    filename: 'static/js/bundle.js',
+    filename: 'static/js/[name].[hash:8].js',
     // There are also additional JS chunk files if you use code splitting.
-    chunkFilename: 'static/js/[name].chunk.js',
+    chunkFilename: 'static/js/[name].[hash:8].chunk.js',
     // This is the URL that app is served from. We use "/" in development.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
@@ -220,6 +232,24 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      chunks: ['home'],
+      template: paths.appHtml,
+      filename: 'home.html'
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      chunks: ['login'],
+      template: paths.appHtml,
+      filename: 'login.html'
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      chunks: ['register'],
+      template: paths.appHtml,
+      filename: 'register.html'
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),

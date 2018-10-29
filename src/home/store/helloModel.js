@@ -6,7 +6,11 @@ class HelloModel{
         Hello.data++
     }
     @action changeNewNum(data) {
+        console.log(111);
+        
         Hello.newData = data
+        console.log(Hello.newData);
+        
     }
     @action reset(data){
         Hello.data = data
