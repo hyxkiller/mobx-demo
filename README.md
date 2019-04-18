@@ -1,7 +1,7 @@
 + 在编译器中启用装饰器
 在 tsconfig.json 中把编译器属性 **experimentalDecorators** 设置为 true (推荐做法)    
 + ***MobX 追踪属性访问，而不是值***
-+ react实例初始化的时候，用mobx-react的Provider将实例包裹起来，参数为store仓库，类似reaxt-redux。
++ react实例初始化的时候，用mobx-react的Provider将实例包裹起来，参数为store仓库，类似react-redux。
 + 全局store仓库可以引入多个模块的store，再export default暴露
 + 可将各模块的store和model拆分开，store中只用mobx中的observable保存相应数据，model中用mobx中的action定义相应函数供ui组件触发。ui组件中需引入mobx-react的inject和observer将ui组件包裹成高阶组件。store中的数据可以从对于props中的store名称中拿到(this.props.Hello)，model中的方法需引入model后再引用。
 
